@@ -1,0 +1,185 @@
+# Python関連
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# インストーラーログ
+pip-log.txt
+pip-delete-this-directory.txt
+
+# テスト・カバレッジレポート
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# 翻訳
+*.mo
+*.pot
+
+# Django関連
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask関連
+instance/
+.webassets-cache
+
+# Scrapy関連
+.scrapy
+
+# Sphinxドキュメント
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery関連
+celerybeat-schedule
+celerybeat.pid
+
+# SageMathパース済みファイル
+*.sage.py
+
+# 環境設定
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyderプロジェクト設定
+.spyderproject
+.spyproject
+
+# Ropeプロジェクト設定
+.ropeproject
+
+# mkdocsドキュメント
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre型チェッカー
+.pyre/
+
+# pytype静的型解析
+.pytype/
+
+# Cythonデバッグシンボル
+cython_debug/
+
+# PyCharm
+.idea/
+
+# Docker関連
+*.dockerignore
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# 環境変数ファイル
+.env
+.env.local
+.env.*.local
+.env.example
+
+# OS関連
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE関連
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ログ
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ランタイムデータ
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# カバレッジディレクトリ
+coverage/
+
+# nyc テストカバレッジ
+.nyc_output
+
+# 依存関係ディレクトリ
+node_modules/.env

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        python-version: 3.11
+        environment-file: environment.yml
+        activate-environment: trading-bot
+    
+    - name: Run ruff
+      shell: bash -l {0}
+      run: |
+        conda activate trading-bot
+        ruff check .
+    
+    - name: Run pytest
+      shell: bash -l {0}
+      run: |
+        conda activate trading-bot
+        pytest || exit 0

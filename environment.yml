@@ -1,0 +1,30 @@
+name: trading-bot
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.11
+  - pytorch
+  - cpuonly
+  - pip
+  - pip:
+    - ray
+    - TA-Lib
+    - pandas
+    - numpy
+    - scikit-learn
+    - matplotlib
+    - seaborn
+    - jupyter
+    - pytest
+    - black
+    - flake8
+    - python-dotenv
+    - requests
+    - pydantic
+    - fastapi
+    - uvicorn
+    - psycopg2-binary
+    - kafka-python
+    - prometheus-client
