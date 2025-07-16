@@ -3,7 +3,7 @@
 Test fetch_ticks.py script with mocked API and database
 """
 import unittest
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
