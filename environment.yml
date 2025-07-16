@@ -25,3 +25,5 @@ dependencies:
     - psycopg2-binary
     - kafka-python
     - prometheus-client
+    - jquantsapi
+    - python-dateutil
