@@ -20,6 +20,7 @@ dependencies:
     - pytest
     - black
     - flake8
+    - ruff
     - python-dotenv
     - requests
     - pydantic
