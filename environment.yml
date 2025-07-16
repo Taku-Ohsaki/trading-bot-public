@@ -1,26 +1,22 @@
 name: trading-bot
 channels:
-  - defaults
   - conda-forge
-  - pytorch
+  - defaults
 dependencies:
   - python=3.11
-  - pytorch
-  - cpuonly
   - pip
   - pip:
+    - ruff
+    - pytest
     - ray
-    - TA-Lib
     - pandas
     - numpy
     - scikit-learn
     - matplotlib
     - seaborn
     - jupyter
-    - pytest
     - black
     - flake8
-    - ruff
     - python-dotenv
     - requests
     - pydantic
