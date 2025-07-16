@@ -5,20 +5,21 @@ channels:
 dependencies:
   - python=3.11
   - pip
+  - pytest
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - jupyter
+  - black
+  - requests
+  - python-dateutil
   - pip:
     - ruff
-    - pytest
     - ray
-    - pandas
-    - numpy
-    - scikit-learn
-    - matplotlib
-    - seaborn
-    - jupyter
-    - black
     - flake8
     - python-dotenv
-    - requests
     - pydantic
     - fastapi
     - uvicorn
@@ -26,4 +27,3 @@ dependencies:
     - kafka-python
     - prometheus-client
     - jquantsapi
-    - python-dateutil
