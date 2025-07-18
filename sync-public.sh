@@ -5,6 +5,12 @@
 
 echo "🌐 Syncing to public repository (trading-bot-public)..."
 
+# Remove sensitive files and directories first
+git rm -r --cached manual/ 2>/dev/null || true
+git rm --cached .env 2>/dev/null || true
+git rm --cached .env.* 2>/dev/null || true
+git rm -r --cached src/models/ 2>/dev/null || true
+
 # Switch to public .gitignore
 if [ -f .gitignore-public ]; then
     echo "📄 Switching to public .gitignore..."
@@ -12,29 +18,29 @@ if [ -f .gitignore-public ]; then
     cp .gitignore-public .gitignore
 fi
 
-# Remove sensitive files and directories first
-git rm -r --cached manual/ 2>/dev/null || true
-git rm --cached .env 2>/dev/null || true
-git rm --cached .env.* 2>/dev/null || true
-
-# Add only non-sensitive files
-git add .
-git add -f docker-compose.yml
-git add -f requirements.txt
-git add -f README.md
-git add -f Dockerfile.dev
-git add -f Makefile
-git add -f .env.template
-git add -f postgres/init/
-git add -f scripts/
-git add -f src/
-git add -f tests/
-git add -f .github/workflows/
+# Add only specific non-sensitive files (avoiding git add .)
+git add .gitignore
+git add sync-public.sh
+git add sync-private.sh
+git add docker-compose.yml
+git add requirements.txt
+git add README.md
+git add Dockerfile.dev
+git add Makefile
+git add postgres/init/
+git add scripts/etl_nightly.sh
+git add scripts/fetch_prices_daily.py
+git add scripts/fetch_prices_intraday.py
+git add scripts/produce_signals.py
+git add src/data/
+git add tests/pytorch_test.py
+git add .github/workflows/ 2>/dev/null || true
 
 # Final cleanup - ensure sensitive files are removed
 git rm -r --cached manual/ 2>/dev/null || true
 git rm --cached .env 2>/dev/null || true
 git rm --cached .env.* 2>/dev/null || true
+git rm -r --cached src/models/ 2>/dev/null || true
 
 # Commit changes
 git commit -m "🌐 Public sync: Infrastructure and non-sensitive code update
