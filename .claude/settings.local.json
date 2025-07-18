@@ -18,9 +18,16 @@
       "Bash(git remote:*)",
       "Bash(chmod:*)",
       "Bash(./sync-private.sh)",
+<<<<<<< Updated upstream
       "Bash(python -m pytest tests/ -v)",
       "Bash(python:*)",
       "Bash(mv:*)"
+=======
+      "Bash(git restore:*)",
+      "Bash(git fetch:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git stash:*)"
+>>>>>>> Stashed changes
     ],
     "deny": []
   }
