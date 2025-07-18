@@ -12,7 +12,9 @@
       "Bash(docker container prune:*)",
       "Bash(docker network:*)",
       "Bash(ruff check:*)",
-      "Bash(python -m pytest tests/test_rank_transformer.py -v)"
+      "Bash(python -m pytest tests/test_rank_transformer.py -v)",
+      "Bash(git rm:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }

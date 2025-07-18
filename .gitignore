@@ -189,3 +189,46 @@ specification.txt
 
 # プロジェクトドキュメント（開発用）
 project_documentation.html
+
+# MLモデル・アルゴリズム機密保持
+src/models/
+tests/test_*_model*.py
+tests/test_*_transformer*.py
+tests/test_*_lstm*.py
+tests/test_*_ppo*.py
+algorithms/
+models/
+*.pkl
+*.pt
+*.pth
+*.model
+*.joblib
+checkpoints/
+saved_models/
+model_weights/
+
+# 学習済みモデル・データ
+*.weights
+*.checkpoint
+*.ckpt
+training_logs/
+tensorboard_logs/
+wandb/
+
+# 戦略・アルゴリズム関連
+strategies/
+signals/
+features/
+indicators/
+backtests/
+*_strategy.py
+*_signal.py
+*_feature.py
+*_indicator.py
+*_backtest.py
+
+# 機密性の高いスクリプト
+scripts/*_model*.py
+scripts/*_train*.py
+scripts/*_predict*.py
+scripts/*_strategy*.py
