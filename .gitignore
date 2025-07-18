@@ -1,8 +1,4 @@
-# Private repository .gitignore - minimal exclusions for complete backup
-# This file is for the private repository that stores everything including ML algorithms
-# Note: .env files are excluded for security even in private repo (use .env.template instead)
-
-# Python関連 (basic only)
+# Python関連
 __pycache__/
 *.py[cod]
 *$py.class
@@ -102,7 +98,7 @@ celerybeat.pid
 # SageMathパース済みファイル
 *.sage.py
 
-# 環境設定 (keep .env.template, exclude actual .env for security)
+# 環境設定
 .env
 .venv
 env/
@@ -138,6 +134,18 @@ cython_debug/
 # PyCharm
 .idea/
 
+# Docker関連
+*.dockerignore
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# 環境変数ファイル
+.env
+.env.local
+.env.*.local
+.env.example
+
 # OS関連
 .DS_Store
 .DS_Store?
@@ -149,11 +157,12 @@ Thumbs.db
 
 # IDE関連
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
 
-# ログ (keep important logs for debugging)
+# ログ
 logs/
 *.log
 npm-debug.log*
@@ -173,27 +182,53 @@ coverage/
 .nyc_output
 
 # 依存関係ディレクトリ
-node_modules/
+node_modules/.env
 
-# 実際の機密データ (exclude for security even in private repo)
-.env
-.env.local
-.env.*.local
+#設計図
+specification.txt
 
 # プロジェクトドキュメント（開発用）
 project_documentation.html
-git_workflow_manual.html
 
-# 機密仕様書ディレクトリ (公開リポジトリでは除外)
-manual/
-# 大きなバイナリファイル
-*.dump
-*.sql.gz
-*.csv.gz
-*.db
+# MLモデル・アルゴリズム機密保持
+src/models/
+tests/test_*_model*.py
+tests/test_*_transformer*.py
+tests/test_*_lstm*.py
+tests/test_*_ppo*.py
+algorithms/
+models/
+*.pkl
+*.pt
+*.pth
+*.model
+*.joblib
+checkpoints/
+saved_models/
+model_weights/
 
-# 一時ファイル
-temp/
-tmp/
-*.tmp
-*.temp
+# 学習済みモデル・データ
+*.weights
+*.checkpoint
+*.ckpt
+training_logs/
+tensorboard_logs/
+wandb/
+
+# 戦略・アルゴリズム関連
+strategies/
+signals/
+features/
+indicators/
+backtests/
+*_strategy.py
+*_signal.py
+*_feature.py
+*_indicator.py
+*_backtest.py
+
+# 機密性の高いスクリプト
+scripts/*_model*.py
+scripts/*_train*.py
+scripts/*_predict*.py
+scripts/*_strategy*.py
