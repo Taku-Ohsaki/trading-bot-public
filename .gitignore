@@ -183,3 +183,9 @@ coverage/
 
 # 依存関係ディレクトリ
 node_modules/.env
+
+#設計図
+specification.txt
+
+# プロジェクトドキュメント（開発用）
+project_documentation.html

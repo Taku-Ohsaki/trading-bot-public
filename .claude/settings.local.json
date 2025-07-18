@@ -10,7 +10,9 @@
       "Bash(docker-compose:*)",
       "Bash(docker image prune:*)",
       "Bash(docker container prune:*)",
-      "Bash(docker network:*)"
+      "Bash(docker network:*)",
+      "Bash(ruff check:*)",
+      "Bash(python -m pytest tests/test_rank_transformer.py -v)"
     ],
     "deny": []
   }
