@@ -28,7 +28,8 @@
       "Bash(git pull:*)",
       "Bash(git rm:*)",
       "Bash(find:*)",
-      "Bash(./sync-public.sh:*)"
+      "Bash(./sync-public.sh:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }
