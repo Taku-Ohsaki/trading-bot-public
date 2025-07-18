@@ -182,6 +182,9 @@ node_modules/
 # プロジェクトドキュメント（開発用）
 project_documentation.html
 git_workflow_manual.html
+
+# 機密仕様書ディレクトリ (公開リポジトリでは除外)
+manual/
 # 大きなバイナリファイル
 *.dump
 *.sql.gz

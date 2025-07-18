@@ -11,6 +11,9 @@ if [ -f .gitignore-public ]; then
     mv .gitignore-public .gitignore
 fi
 
+# Remove sensitive files first
+git rm -r --cached manual/ 2>/dev/null || true
+
 # Add only non-sensitive files
 git add .
 git add -f docker-compose.yml
@@ -24,6 +27,9 @@ git add -f scripts/etl_nightly.sh
 git add -f scripts/fetch_prices_daily.py
 git add -f src/data/
 git add -f .github/workflows/
+
+# Explicitly exclude manual directory
+git rm -r --cached manual/ 2>/dev/null || true
 
 # Commit changes
 git commit -m "🌐 Public sync: Infrastructure and non-sensitive code update
