@@ -8,7 +8,7 @@ import json
 import os
 import sys
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 import pandas as pd
 import numpy as np
 from kafka import KafkaConsumer, KafkaProducer
@@ -17,7 +17,6 @@ import pandas_ta as ta
 from dotenv import load_dotenv
 import logging
 from collections import deque
-import time
 import torch
 
 # プロジェクトルートをパスに追加

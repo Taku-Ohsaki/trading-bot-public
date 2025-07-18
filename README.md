@@ -3,6 +3,8 @@
 CLIやAIの活用、また、コーディングの勉強を兼ねて作っております。
 このリポジトリには公開用のコードのみ載せています
 
+7/19　戦略変更→ほとんどのフォルダーを更新し、Intraday LSTM & Signal　ストリームシステム完了
+
 7/18　Producer → Kafka → Consumer → postgresの流れを作成
 
 7/17　J-QuantのデータをAPIと用いてSQLに格納するテスト完了

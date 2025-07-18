@@ -17,7 +17,9 @@
       "Bash(git add:*)",
       "Bash(git remote:*)",
       "Bash(chmod:*)",
-      "Bash(./sync-private.sh)"
+      "Bash(./sync-private.sh)",
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(python:*)"
     ],
     "deny": []
   }

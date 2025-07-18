@@ -3,14 +3,13 @@ J-Quantsからティックデータを取得するクライアント
 """
 import os
 import time
-from datetime import datetime
+import json
+from datetime import datetime, timedelta
 from dateutil import tz
-from typing import List, Dict
 import pandas as pd
 import jquantsapi
 from dotenv import load_dotenv
 from functools import lru_cache
-import hashlib
 
 
 class JQuantsClient:
@@ -31,11 +30,106 @@ class JQuantsClient:
         if not self.mail_address or not self.password:
             raise ValueError("JQUANTS_ID and JQUANTS_PASSWORD environment variables are required")
         
+        # トークンファイルのパス
+        self.token_file = os.path.join(os.path.dirname(__file__), "..", "..", "data", "jquants_token.json")
+        
         # jquantsapi クライアントを初期化
         self.client = jquantsapi.Client(
             mail_address=self.mail_address,
             password=self.password
         )
+        
+        # 保存されたトークンを読み込み
+        self._load_token()
+    
+    def _load_token(self):
+        """
+        保存されたトークンを読み込む
+        """
+        try:
+            if os.path.exists(self.token_file):
+                with open(self.token_file, 'r') as f:
+                    token_data = json.load(f)
+                    
+                # トークンの有効期限をチェック
+                if token_data.get('expires_at'):
+                    expires_at = datetime.fromisoformat(token_data['expires_at'])
+                    if datetime.now() < expires_at:
+                        # トークンがまだ有効な場合、クライアントに設定
+                        if token_data.get('refresh_token'):
+                            self.client.set_refresh_token(token_data['refresh_token'])
+                        print(f"既存のトークンを読み込みました（有効期限: {expires_at}）")
+                        return
+                    else:
+                        print("保存されたトークンの有効期限が切れています")
+                        
+        except Exception as e:
+            print(f"トークンの読み込みに失敗しました: {e}")
+        
+        # トークンが無効または存在しない場合、新しいトークンを取得
+        self._refresh_token()
+    
+    def _save_token(self, refresh_token: str):
+        """
+        トークンを保存する
+        
+        Args:
+            refresh_token: リフレッシュトークン
+        """
+        try:
+            # dataディレクトリを作成
+            os.makedirs(os.path.dirname(self.token_file), exist_ok=True)
+            
+            token_data = {
+                'refresh_token': refresh_token,
+                'expires_at': (datetime.now() + timedelta(hours=23)).isoformat(),  # 23時間後に期限切れ
+                'created_at': datetime.now().isoformat()
+            }
+            
+            with open(self.token_file, 'w') as f:
+                json.dump(token_data, f, indent=2)
+            
+            print(f"トークンを保存しました: {self.token_file}")
+            
+        except Exception as e:
+            print(f"トークンの保存に失敗しました: {e}")
+    
+    def _refresh_token(self):
+        """
+        リフレッシュトークンを取得して保存する
+        """
+        try:
+            # 新しいリフレッシュトークンを取得
+            refresh_token = self.client.get_refresh_token()
+            
+            if refresh_token:
+                # トークンを保存
+                self._save_token(refresh_token)
+                print("リフレッシュトークンを更新しました")
+            else:
+                print("リフレッシュトークンの取得に失敗しました")
+                
+        except Exception as e:
+            print(f"リフレッシュトークンの更新に失敗しました: {e}")
+    
+    def ensure_token_valid(self):
+        """
+        トークンの有効性を確認し、必要に応じて更新する
+        """
+        try:
+            if os.path.exists(self.token_file):
+                with open(self.token_file, 'r') as f:
+                    token_data = json.load(f)
+                    
+                if token_data.get('expires_at'):
+                    expires_at = datetime.fromisoformat(token_data['expires_at'])
+                    # 有効期限の1時間前にトークンを更新
+                    if datetime.now() >= expires_at - timedelta(hours=1):
+                        print("トークンの有効期限が近づいています。更新します...")
+                        self._refresh_token()
+                        
+        except Exception as e:
+            print(f"トークンの有効性確認に失敗しました: {e}")
     
     def _retry_operation(self, func, max_retries=3, delay=1):
         """
@@ -88,10 +182,10 @@ class JQuantsClient:
         Returns:
             日次価格データのDataFrame（columns: date, open, high, low, close, volume）
         """
-        # キャッシュキーを生成（60秒キャッシュ）
-        cache_key = self._get_daily_cache_key(symbol, start, end)
-        
         def _fetch_data():
+            # トークンの有効性を確認
+            self.ensure_token_valid()
+            
             # 日付文字列をdatetimeオブジェクトに変換
             start_dt = datetime.strptime(start, "%Y-%m-%d")
             start_dt = start_dt.replace(tzinfo=tz.gettz("Asia/Tokyo"))
@@ -137,10 +231,10 @@ class JQuantsClient:
         Returns:
             1分足データのDataFrame（columns: time, price, volume）
         """
-        # キャッシュキーを生成（60秒キャッシュ）
-        cache_key = self._get_1min_cache_key(symbol, date)
-        
         def _fetch_data():
+            # トークンの有効性を確認
+            self.ensure_token_valid()
+            
             # 日付文字列をdatetimeオブジェクトに変換
             date_obj = datetime.strptime(date, "%Y-%m-%d")
             date_obj = date_obj.replace(tzinfo=tz.gettz("Asia/Tokyo"))

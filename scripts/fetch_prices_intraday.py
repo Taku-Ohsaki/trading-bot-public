@@ -9,7 +9,6 @@ import os
 import sys
 import psycopg2
 from datetime import datetime
-from typing import List, Dict, Optional
 import pandas as pd
 from dotenv import load_dotenv
 
@@ -71,7 +70,6 @@ class IntradayPricesFetcher:
         # 最初の価格を開始価格として使用
         if len(df) > 0:
             base_price = df.iloc[0]['price']
-            base_volume = df.iloc[0]['volume']
         else:
             return pd.DataFrame(columns=['datetime', 'open', 'high', 'low', 'close', 'volume'])
         
