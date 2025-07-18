@@ -19,7 +19,8 @@
       "Bash(chmod:*)",
       "Bash(./sync-private.sh)",
       "Bash(python -m pytest tests/ -v)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }
