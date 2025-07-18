@@ -179,15 +179,6 @@ node_modules/
 .env.local
 .env.*.local
 
-# J-Quants API トークンファイル
-data/jquants_token.json
-
-# 機密情報を含む設定ファイル
-required_info.txt
-
-# マニュアル・ドキュメント（privateリポジトリのみ）
-manual/
-
 # プロジェクトドキュメント（開発用）
 project_documentation.html
 git_workflow_manual.html
