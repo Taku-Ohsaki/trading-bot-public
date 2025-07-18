@@ -14,7 +14,10 @@
       "Bash(ruff check:*)",
       "Bash(python -m pytest tests/test_rank_transformer.py -v)",
       "Bash(git rm:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git remote:*)",
+      "Bash(chmod:*)",
+      "Bash(./sync-private.sh)"
     ],
     "deny": []
   }

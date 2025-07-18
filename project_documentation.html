@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式自動売買BOT - プロジェクト詳細ドキュメント</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', 'Hiragino Sans', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+        .toc h2 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        .toc ul {
+            list-style: none;
+        }
+        .toc li {
+            margin: 5px 0;
+        }
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .toc a:hover {
+            background-color: #667eea;
+            color: white;
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .section h3 {
+            color: #764ba2;
+            margin: 20px 0 10px 0;
+            font-size: 1.4em;
+        }
+        .file-card {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #28a745;
+        }
+        .file-card h4 {
+            color: #28a745;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        .file-path {
+            background: #f1f1f1;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .file-description {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .file-details {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #6c757d;
+        }
+        .file-details h5 {
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+        .file-details ul {
+            margin-left: 20px;
+        }
+        .file-details li {
+            margin: 5px 0;
+        }
+        .code-snippet {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-in-progress {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-pending {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .architecture-diagram {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .tech-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #dc3545;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .tech-item h4 {
+            color: #dc3545;
+            margin-bottom: 8px;
+        }
+        .phase-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .phase-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .phase-card h4 {
+            margin-bottom: 10px;
+        }
+        .phase-completed {
+            border-left: 4px solid #28a745;
+        }
+        .phase-in-progress {
+            border-left: 4px solid #ffc107;
+        }
+        .phase-pending {
+            border-left: 4px solid #dc3545;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 株式自動売買BOT</h1>
+            <p>J-Quants Standard プラン対応 - プロジェクト詳細ドキュメント</p>
+            <p>最終更新: 2025年7月18日</p>
+        </div>
+
+        <div class="toc">
+            <h2>📋 目次</h2>
+            <ul>
+                <li><a href="#overview">1. プロジェクト概要</a></li>
+                <li><a href="#architecture">2. システム全体アーキテクチャ</a></li>
+                <li><a href="#tech-stack">3. 技術スタック</a></li>
+                <li><a href="#phase-status">4. 開発フェーズ状況</a></li>
+                <li><a href="#files">5. ファイル詳細解説</a></li>
+                <li><a href="#next-steps">6. 次のステップ</a></li>
+            </ul>
+        </div>
+
+        <section id="overview" class="section">
+            <h2>🎯 1. プロジェクト概要</h2>
+            <p>本プロジェクトは、J-Quants Standard プランを利用した株式自動売買BOTです。機械学習アルゴリズムを組み合わせて、年率15-20%のリターンとSharpe比1.5以上を目指します。</p>
+            
+            <div class="file-details">
+                <h5>🎯 目標KPI</h5>
+                <ul>
+                    <li><strong>目標年率リターン:</strong> 15-20%</li>
+                    <li><strong>目標Sharpe比:</strong> ≥ 1.5</li>
+                    <li><strong>許容最大ドローダウン:</strong> ≤ 15%</li>
+                    <li><strong>運用資本:</strong> 100万円～1,000万円スケール</li>
+                    <li><strong>取引対象:</strong> 東証上場株（プライム/スタンダード/グロース）</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="architecture" class="section">
+            <h2>🏗️ 2. システム全体アーキテクチャ</h2>
+            <div class="architecture-diagram">
+                <h3>データフロー</h3>
+                <div class="code-snippet">
+J-Quants API → FastAPI Collector → Kafka → PostgreSQL
+                ↓
+         Feature Engineering (pandas-ta)
+                ↓
+      ML Models (Transformer, LSTM, PPO)
+                ↓
+         Portfolio Allocation
+                ↓
+           Order Execution
+                </div>
+            </div>
+            
+            <div class="file-details">
+                <h5>🔧 主要コンポーネント</h5>
+                <ul>
+                    <li><strong>データレイヤ:</strong> J-Quants API → Kafka → PostgreSQL</li>
+                    <li><strong>Feature-Hub:</strong> テクニカル指標 + マーケット統計 + ファンダメンタルズ</li>
+                    <li><strong>モデル層:</strong> 5つのMLアルゴリズム（Transformer, LSTM, PPO等）</li>
+                    <li><strong>実行層:</strong> SBI API経由での現物取引</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="tech-stack" class="section">
+            <h2>💻 3. 技術スタック</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h4>🐍 Python Core</h4>
+                    <p>Python 3.11, pandas, numpy, scikit-learn</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🧠 Machine Learning</h4>
+                    <p>PyTorch, Transformers, LSTM, Random Forest</p>
+                </div>
+                <div class="tech-item">
+                    <h4>📊 Data & Storage</h4>
+                    <p>PostgreSQL, Kafka, J-Quants API</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🐳 Infrastructure</h4>
+                    <p>Docker, docker-compose, GitHub Actions</p>
+                </div>
+                <div class="tech-item">
+                    <h4>📈 Monitoring</h4>
+                    <p>Grafana, Prometheus, Discord Webhook</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🔧 Development</h4>
+                    <p>pytest, ruff, Makefile, CI/CD</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="phase-status" class="section">
+            <h2>📊 4. 開発フェーズ状況</h2>
+            <div class="phase-status">
+                <div class="phase-card phase-completed">
+                    <h4>Phase P0: 骨格 <span class="status-badge status-completed">完了</span></h4>
+                    <p>基本的なプロジェクト構造とDocker環境の構築が完了。</p>
+                </div>
+                <div class="phase-card phase-in-progress">
+                    <h4>Phase P1: 日次ETL + Transformer <span class="status-badge status-in-progress">進行中</span></h4>
+                    <p>データ取得スクリプトとRank-Transformerモデルの実装が完了。PostgreSQL連携が残り。</p>
+                </div>
+                <div class="phase-card phase-pending">
+                    <h4>Phase P2: LSTM + Live Signal <span class="status-badge status-pending">未着手</span></h4>
+                    <p>1分/5分足LSTMモデルとリアルタイムシグナル生成の実装予定。</p>
+                </div>
+                <div class="phase-card phase-pending">
+                    <h4>Phase P3: PPO + Dynamic Allocator <span class="status-badge status-pending">未着手</span></h4>
+                    <p>強化学習モデルとダイナミックアロケーションの実装予定。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="files" class="section">
+            <h2>📁 5. ファイル詳細解説</h2>
+            
+            <h3>🐍 Python ソースコード</h3>
+            
+            <div class="file-card">
+                <h4>🤖 src/models/rank_transformer.py</h4>
+                <div class="file-path">src/models/rank_transformer.py</div>
+                <div class="file-description">
+                    <strong>メインMLモデル:</strong> 株式ランキング予測用のTransformerモデル実装。Time2Vec埋め込みと位置エンコーディングを使用し、2層4ヘッドのTransformerエンコーダーで構築。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 主要機能</h5>
+                    <ul>
+                        <li><strong>Time2Vec:</strong> 時系列データの埋め込み表現（16次元→64次元）</li>
+                        <li><strong>Transformer:</strong> 2層4ヘッドのエンコーダー構造</li>
+                        <li><strong>テクニカル指標:</strong> SMA, RSI, ボラティリティ等の自動生成</li>
+                        <li><strong>fit()メソッド:</strong> 過去データでの学習（100エポック）</li>
+                        <li><strong>predict_top(N):</strong> 上位N銘柄のランキング予測</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>📊 src/data/jquants_client.py</h4>
+                <div class="file-path">src/data/jquants_client.py</div>
+                <div class="file-description">
+                    <strong>データ取得クライアント:</strong> J-Quants APIからの株価データ取得を担当。日次データと1分足データの両方に対応し、リトライ機能とキャッシュ機能を内蔵。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 主要機能</h5>
+                    <ul>
+                        <li><strong>認証:</strong> J-Quants API認証（メールアドレス+パスワード）</li>
+                        <li><strong>日次データ:</strong> OHLCV形式での株価データ取得</li>
+                        <li><strong>1分足データ:</strong> 高頻度データ取得（実装済み）</li>
+                        <li><strong>リトライ機能:</strong> 最大3回の自動再試行</li>
+                        <li><strong>キャッシュ:</strong> 60秒間のメモリキャッシュで高速化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>🔄 scripts/fetch_prices_daily.py</h4>
+                <div class="file-path">scripts/fetch_prices_daily.py</div>
+                <div class="file-description">
+                    <strong>日次データ取得スクリプト:</strong> 外部依存ファイル。J-Quants APIから株価データを取得してPostgreSQLに保存するETLスクリプト。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 想定される機能</h5>
+                    <ul>
+                        <li><strong>universe.csv:</strong> 銘柄リストの読み込み</li>
+                        <li><strong>日付範囲指定:</strong> --start と --end パラメータ</li>
+                        <li><strong>PostgreSQL連携:</strong> pricesテーブルへの保存</li>
+                        <li><strong>バッチ処理:</strong> 複数銘柄の一括取得</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>⏰ scripts/etl_nightly.sh</h4>
+                <div class="file-path">scripts/etl_nightly.sh</div>
+                <div class="file-description">
+                    <strong>日次ETLバッチ:</strong> 毎日午前3時に実行される自動データ更新スクリプト。前日分のデータを自動取得。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 実行内容</h5>
+                    <ul>
+                        <li><strong>前日データ:</strong> $(date -d '1 day ago' +%F) で前日日付を取得</li>
+                        <li><strong>当日まで:</strong> $(date +%F) で当日日付を取得</li>
+                        <li><strong>銘柄リスト:</strong> universe.csv から取得銘柄を決定</li>
+                        <li><strong>cron連携:</strong> 03:00 に自動実行想定</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>🧪 tests/test_rank_transformer.py</h4>
+                <div class="file-path">tests/test_rank_transformer.py</div>
+                <div class="file-description">
+                    <strong>単体テスト:</strong> RankTransformerモデルの動作確認テスト。100行のランダムOHLCVデータを生成してモデルの学習・予測機能をテスト。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 テストケース</h5>
+                    <ul>
+                        <li><strong>基本テスト:</strong> 100行データでfit() → predict_top(5)が正常動作</li>
+                        <li><strong>小規模データ:</strong> 10行データでの動作確認</li>
+                        <li><strong>Volume無し:</strong> volumeカラムがない場合の処理</li>
+                        <li><strong>エラーケース:</strong> 学習前予測でのエラー処理</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🔧 設定・構成ファイル</h3>
+
+            <div class="file-card">
+                <h4>🐳 docker-compose.yml</h4>
+                <div class="file-path">docker-compose.yml</div>
+                <div class="file-description">
+                    <strong>Docker環境構成:</strong> PostgreSQL, Kafka, Grafana, アプリケーションサーバーを統合管理。producerとconsumerサービスは削除済み。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 サービス構成</h5>
+                    <ul>
+                        <li><strong>postgres:</strong> PostgreSQL 13（prices テーブル用）</li>
+                        <li><strong>kafka + zookeeper:</strong> リアルタイムデータストリーミング</li>
+                        <li><strong>grafana:</strong> ダッシュボード（ポート3000）</li>
+                        <li><strong>app:</strong> メインアプリケーション（ポート8000）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>📦 requirements.txt</h4>
+                <div class="file-path">requirements.txt</div>
+                <div class="file-description">
+                    <strong>Python依存関係:</strong> プロジェクトで使用する全ライブラリのバージョン管理。torch, scikit-learn を最新追加。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 主要ライブラリ</h5>
+                    <ul>
+                        <li><strong>機械学習:</strong> torch>=2.0.0, scikit-learn>=1.3.0</li>
+                        <li><strong>データ処理:</strong> pandas>=1.5.0, numpy>=1.26.0</li>
+                        <li><strong>API:</strong> J-Quants API client（GitHub直接インストール）</li>
+                        <li><strong>テスト:</strong> pytest>=7.0.0, ruff>=0.1.0</li>
+                        <li><strong>インフラ:</strong> psycopg2-binary, confluent-kafka</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>🗄️ postgres/init/001_create_prices.sql</h4>
+                <div class="file-path">postgres/init/001_create_prices.sql</div>
+                <div class="file-description">
+                    <strong>DB初期化スクリプト:</strong> PostgreSQL起動時に自動実行される。株価データ保存用のpricesテーブルを作成。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 テーブル構造</h5>
+                    <ul>
+                        <li><strong>PRIMARY KEY:</strong> (date, symbol) の複合キー</li>
+                        <li><strong>OHLCV:</strong> open, high, low, close, volume カラム</li>
+                        <li><strong>データ型:</strong> NUMERIC (価格), BIGINT (出来高)</li>
+                        <li><strong>制約:</strong> NOT NULL制約で必須フィールド保証</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>🚀 .github/workflows/ci.yml</h4>
+                <div class="file-path">.github/workflows/ci.yml</div>
+                <div class="file-description">
+                    <strong>CI/CD設定:</strong> GitHub Actions での自動テスト実行。コードスタイルチェック（ruff）とテスト実行（pytest）を自動化。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 CI ステップ</h5>
+                    <ul>
+                        <li><strong>Python 3.11:</strong> 開発環境と同じバージョン</li>
+                        <li><strong>依存関係:</strong> requirements.txt からの自動インストール</li>
+                        <li><strong>コードスタイル:</strong> ruff check . による静的解析</li>
+                        <li><strong>テスト実行:</strong> pytest || exit 0 （常に成功）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>⚙️ 開発・運用ファイル</h3>
+
+            <div class="file-card">
+                <h4>🛠️ Makefile</h4>
+                <div class="file-path">Makefile</div>
+                <div class="file-description">
+                    <strong>開発タスク自動化:</strong> conda環境でのテスト実行、Docker操作、コードフォーマット等を簡単なコマンドで実行可能。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 利用可能コマンド</h5>
+                    <ul>
+                        <li><strong>make test:</strong> conda環境でのpytest実行</li>
+                        <li><strong>make up/down:</strong> docker-compose 操作</li>
+                        <li><strong>make lint:</strong> black + flake8 でコードフォーマット</li>
+                        <li><strong>make dev:</strong> 開発環境起動（--build付き）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>🐳 Dockerfile.dev</h4>
+                <div class="file-path">Dockerfile.dev</div>
+                <div class="file-description">
+                    <strong>開発用Dockerイメージ:</strong> Python 3.11-slim ベースで、Git インストール済み。J-Quants API クライアントのGitHubインストールに対応。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 構成内容</h5>
+                    <ul>
+                        <li><strong>ベースイメージ:</strong> python:3.11-slim</li>
+                        <li><strong>Git:</strong> GitHub依存パッケージ用</li>
+                        <li><strong>ポート:</strong> 8000番でuvicorn起動</li>
+                        <li><strong>リロード:</strong> --reload オプションで開発効率化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>🔐 .env.template</h4>
+                <div class="file-path">.env.template</div>
+                <div class="file-description">
+                    <strong>環境変数テンプレート:</strong> J-Quants API認証情報とPostgreSQL接続情報のテンプレート。本番環境では.envファイルにコピーして使用。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 設定項目</h5>
+                    <ul>
+                        <li><strong>J-Quants:</strong> JQUANTS_ID, JQUANTS_PASSWORD</li>
+                        <li><strong>PostgreSQL:</strong> PGHOST, PGPORT, PGUSER, PGPASSWORD</li>
+                        <li><strong>データベース:</strong> PGDATABASE=postgres</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>🚫 .gitignore</h4>
+                <div class="file-path">.gitignore</div>
+                <div class="file-description">
+                    <strong>Git除外設定:</strong> Python、Docker、IDE、ログファイル等を包括的に除外。specification.txt も除外対象（機密情報保護）。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 除外対象</h5>
+                    <ul>
+                        <li><strong>Python:</strong> __pycache__, *.pyc, .env, venv/</li>
+                        <li><strong>Docker:</strong> Dockerfile*, docker-compose*.yml</li>
+                        <li><strong>IDE:</strong> .vscode/, .idea/, *.swp</li>
+                        <li><strong>機密:</strong> .env*, logs/, specification.txt</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="file-card">
+                <h4>📖 README.md</h4>
+                <div class="file-path">README.md</div>
+                <div class="file-description">
+                    <strong>プロジェクト説明:</strong> Sharpe比1.5以上を目指す株式トレーディングBOTの概要。開発履歴と進捗状況を記録。
+                </div>
+                <div class="file-details">
+                    <h5>🔧 記載内容</h5>
+                    <ul>
+                        <li><strong>目標:</strong> Sharpe比1.5以上の安定収益</li>
+                        <li><strong>技術:</strong> CLI、AI活用、コーディング学習目的</li>
+                        <li><strong>進捗:</strong> 7/18 Kafka実装、7/17 J-Quants連携完了</li>
+                        <li><strong>備考:</strong> 公開用リポジトリ（機密情報は除外）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="next-steps" class="section">
+            <h2>🚀 6. 次のステップ</h2>
+            
+            <div class="warning-box">
+                <h4>⚠️ 重要な未実装項目</h4>
+                <p>以下の項目は Phase P1 完了のために必要です：</p>
+            </div>
+
+            <div class="file-details">
+                <h5>🔧 Phase P1 完了への道筋</h5>
+                <ul>
+                    <li><strong>PostgreSQL連携:</strong> rank_transformer.py の実データ学習機能</li>
+                    <li><strong>fetch_prices_daily.py:</strong> 実装とテスト（現在外部依存）</li>
+                    <li><strong>universe.csv:</strong> 取引対象銘柄リストの作成</li>
+                    <li><strong>データパイプライン:</strong> ETL → 特徴量エンジニアリング → モデル学習の自動化</li>
+                </ul>
+            </div>
+
+            <div class="file-details">
+                <h5>🔧 Phase P2 以降の予定</h5>
+                <ul>
+                    <li><strong>LSTM-Intraday:</strong> 5分先リターン予測モデル</li>
+                    <li><strong>Real-time Signal:</strong> Kafka経由のリアルタイム売買シグナル</li>
+                    <li><strong>PPO Agent:</strong> 強化学習による動的ポートフォリオ最適化</li>
+                    <li><strong>SBI API:</strong> 実際の注文執行システム</li>
+                </ul>
+            </div>
+
+            <div class="phase-card phase-in-progress">
+                <h4>📈 現在の技術的負債</h4>
+                <ul>
+                    <li>RankTransformer の実データ学習機能が未実装</li>
+                    <li>Kafka Producer/Consumer の削除により実時間データ処理が停止</li>
+                    <li>テストデータが人工的（100行ランダム）で実用性が限定的</li>
+                    <li>PostgreSQL との連携テストが不十分</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p>🤖 株式自動売買BOT - Project Documentation</p>
+            <p>Generated: 2025年7月18日 | Status: Phase P1 進行中</p>
+            <p><strong>⚠️ 本ドキュメントは開発用途のため、GitHubにはpushしないでください</strong></p>
+        </div>
+    </div>
+</body>
+</html>
