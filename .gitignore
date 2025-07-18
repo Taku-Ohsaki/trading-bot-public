@@ -1,5 +1,6 @@
 # Private repository .gitignore - minimal exclusions for complete backup
 # This file is for the private repository that stores everything including ML algorithms
+# Note: .env files are excluded for security even in private repo (use .env.template instead)
 
 # Python関連 (basic only)
 __pycache__/
@@ -101,7 +102,7 @@ celerybeat.pid
 # SageMathパース済みファイル
 *.sage.py
 
-# 環境設定 (keep .env.template, exclude actual .env)
+# 環境設定 (keep .env.template, exclude actual .env for security)
 .env
 .venv
 env/
@@ -174,7 +175,7 @@ coverage/
 # 依存関係ディレクトリ
 node_modules/
 
-# 実際の機密データ (keep templates)
+# 実際の機密データ (exclude for security even in private repo)
 .env
 .env.local
 .env.*.local
