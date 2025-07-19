@@ -29,7 +29,8 @@
       "Bash(git rm:*)",
       "Bash(find:*)",
       "Bash(./sync-public.sh:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }
